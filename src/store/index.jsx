@@ -7,29 +7,23 @@ const CharacterContext = createContext(null);
 
 const CharacterProvider = ({children}) => {
 
-    const [error, setError] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [charactersListAll, setCharactersListAll] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [unknown, setUnknown] = useState(false);
     const [isSearching, setIsSearching] = useState(false)
-    const [info, setInfo] = useState({});
+    const [urlForNextPage, setUrlForNextPage] = useState("");
     const [singleCharacterDetails, setSingleCharacterDetails] = useState([]);
     const urlSearchCharacters = `https://rickandmortyapi.com/api/character/?name=${searchTerm}`;
-
-    // const [state, setState] = useState<StateTypes>({
+    // const [state, setState] = useState({
     //     error: false,
+    //     unknown: false,
+    //     isLoading: true,
+    //     isSearching: false,
     //     searchTerm: '',
     //     charactersListAll: [],
-    //     isLoading: true,
-    //     unknown: false,
-    //     isSearching: false,
     //     info: {},
     // });
-
-
-
-
 
     const fetchCharacters = async (url) => {
         try {
@@ -39,7 +33,7 @@ const CharacterProvider = ({children}) => {
                 } else {
                     setCharactersListAll(prevState => [...prevState, ...data.data.results]);
                 }
-                setInfo(data.data.info);
+                setUrlForNextPage(data.data.info.next);
             });
         } catch (error) {
             setError(true)
@@ -51,7 +45,7 @@ const CharacterProvider = ({children}) => {
 
     const handleLoadMore = () => {
         setIsLoading(true);
-        fetchCharacters(info.next);
+        fetchCharacters(urlForNextPage);
     };
 
     const fetchCharactersBySearch = async (url) => {
@@ -77,23 +71,20 @@ const CharacterProvider = ({children}) => {
             setIsSearching(false);
             setUnknown(false);
         }
-
     }, [searchTerm]);
-
+    let timer;
     const handleSearchChange = (event) => {
         if (unknown){
             window.alert("No similar characters");
             event.target.value = "";
         }
-        let timer;
+
         clearTimeout(timer);
         timer = setTimeout(() => {
             setIsSearching(true);
             setSearchTerm(event.target.value);
         }, 700);
     };
-
-
 
     const fetchSingleCharacter = async (url) => {
         try {
@@ -121,7 +112,6 @@ const CharacterProvider = ({children}) => {
     const contextValue = {
         characters: charactersListAll,
         isLoading,
-        error,
         searchTerm,
         handleSearchChange,
         handleLoadMore,
@@ -136,10 +126,9 @@ const CharacterProvider = ({children}) => {
             {children}
         </CharacterContext.Provider>
     );
-
 };
 
-const useGlobalContext = () => {
+const useCharacterContext = () => {
     const context = useContext(CharacterContext);
     if (!context) {
         throw new Error("Context not provided");
@@ -148,4 +137,4 @@ const useGlobalContext = () => {
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-export {useGlobalContext, CharacterContext, CharacterProvider};
+export {useCharacterContext, CharacterContext, CharacterProvider};

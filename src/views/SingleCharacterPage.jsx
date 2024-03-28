@@ -1,12 +1,10 @@
 import {IoIosArrowBack} from "react-icons/io";
-import axios from "axios";
 import {useLoaderData, useNavigate} from "react-router-dom";
 
 
 const SingleCharacter = () => {
     const navigate = useNavigate();
     const characterDetails = useLoaderData();
-
     return (
         <>
             <section
@@ -30,21 +28,19 @@ const SingleCharacter = () => {
                     </header>
                     <div className="flex flex-col gap-5">
                         <h3 className="text-xl md:text-2xl">Character info</h3>
-                        <div className="flex flex-row gap-5 md:gap-10">
+                        <div className="grid grid-cols-3 gap-y-4 gap-x-1 justify-items-start content-start ">
                             <div>
                                 <label className="text-gray-400">Species</label>
                                 <h5 className="text-lg">{characterDetails.species}</h5>
                             </div>
                             <div>
                                 <label className="text-gray-400">Origin</label>
-                                <h5 className="text-lg">{characterDetails.origin.name}</h5>
+                                <h5 className="text-lg max-w-40">{characterDetails.origin.name}</h5>
                             </div>
                             <div>
                                 <label className="text-gray-400">Location</label>
-                                <h5 className="text-lg">{characterDetails.location.name}</h5>
+                                <h5 className="text-lg max-w-40">{characterDetails.location.name}</h5>
                             </div>
-                        </div>
-                        <div className="flex flex-row gap-5 md:gap-10">
                             <div>
                                 <label className="text-gray-400">Status</label>
                                 <h5 className="text-lg">{characterDetails.status}</h5>
@@ -53,9 +49,10 @@ const SingleCharacter = () => {
                                 <label className="text-gray-400">Gender</label>
                                 <h5 className="text-lg">{characterDetails.gender}</h5>
                             </div>
+
                         </div>
 
-                        <div className="w-full h-[40vh] overflow-hidden pb-5">
+                        <div className="w-full h-[50vh] overflow-hidden pb-5">
                             <h3 className="text-xl md:text-2xl pb-3">Episodes</h3>
 
                             <div className="overflow-y-auto h-full flex flex-col justify-start">

@@ -1,8 +1,8 @@
-import {useGlobalContext} from "../store";
+import {useCharacterContext} from "../store";
 import {Link} from "react-router-dom";
 
 const HomeFeed = () => {
-    const {characters, handleLoadMore, isLoading} = useGlobalContext();
+    const {characters, handleLoadMore, isLoading} = useCharacterContext();
     return (
         <>
             {

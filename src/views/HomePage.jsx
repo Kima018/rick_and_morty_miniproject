@@ -1,5 +1,5 @@
 import HomeFeed from "../components/HomeFeed.jsx";
-import {useGlobalContext} from "../store";
+import {useCharacterContext} from "../store";
 import Spinner from "../components/Spinner.jsx";
 
 const Home = () => {
@@ -7,7 +7,7 @@ const Home = () => {
         isLoading,
         searchTerm,
         handleSearchChange,
-    } = useGlobalContext();
+    } = useCharacterContext();
 
 
     return (
