@@ -93,7 +93,6 @@ const CharacterProvider = ({children}) => {
                 setSingleCharacterDetails(data.data);
             });
         } catch (error) {
-            setError(true);
             console.error('Error fetching suggestions:', error);
         } finally {
             if (singleCharacterDetails.length !== 0) {
